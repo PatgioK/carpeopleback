@@ -1,5 +1,6 @@
 class CarsController < ApplicationController
   before_action :set_car, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token
 
   # GET /cars or /cars.json
   def index
@@ -65,6 +66,6 @@ class CarsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def car_params
-      params.require(:car).permit(:year, :make, :model, :price)
+      params.require(:car).permit(:year, :make, :model, :price, :id,)
     end
 end
