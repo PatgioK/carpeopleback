@@ -61,7 +61,7 @@ class PeopleController < ApplicationController
       #changing default otherwise throw error to frontend when we del
       #format.json { head :no_content }
       
-      format.json { render json: Post.all, status: :ok }
+      format.json { render json: Person.all, status: :ok }
 
     end
   end
