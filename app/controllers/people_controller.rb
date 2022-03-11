@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_action :set_person, only: %i[ show edit update destroy ]
   
   #skipping authentication for CRUD APP, normally would have but this app
-  #has no login
+  #has no login. cross site forging?
   skip_before_action :verify_authenticity_token
 
   # GET /people or /people.json
@@ -43,10 +43,12 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @person.update(person_params)
         format.html { redirect_to person_url(@person), notice: "Person was successfully updated." }
-        format.json { render :show, status: :ok, location: @person }
+        format.json { render json: Person.all, status: :ok }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        # format.json { render json: @person.errors, status: :unprocessable_entity }
+      format.json { render json: Person.all, status: :ok }
+
       end
     end
   end
@@ -61,6 +63,7 @@ class PeopleController < ApplicationController
       #changing default otherwise throw error to frontend when we del
       #format.json { head :no_content }
       
+      #extra request but small and keeps in sync / instant changes to frontend
       format.json { render json: Person.all, status: :ok }
 
     end
