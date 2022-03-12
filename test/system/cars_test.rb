@@ -16,6 +16,7 @@ class CarsTest < ApplicationSystemTestCase
 
     fill_in "Make", with: @car.make
     fill_in "Model", with: @car.model
+    fill_in "Person", with: @car.person_id
     fill_in "Price", with: @car.price
     fill_in "Year", with: @car.year
     click_on "Create Car"
@@ -30,6 +31,7 @@ class CarsTest < ApplicationSystemTestCase
 
     fill_in "Make", with: @car.make
     fill_in "Model", with: @car.model
+    fill_in "Person", with: @car.person_id
     fill_in "Price", with: @car.price
     fill_in "Year", with: @car.year
     click_on "Update Car"

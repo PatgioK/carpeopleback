@@ -2,12 +2,14 @@ class PeopleController < ApplicationController
   before_action :set_person, only: %i[ show edit update destroy ]
   
   #skipping authentication for CRUD APP, normally would have but this app
-  #has no login. cross site forging?
+  #has no login
   skip_before_action :verify_authenticity_token
 
   # GET /people or /people.json
   def index
     @people = Person.all
+
+    render json: @people.to_json(include: :cars)
   end
 
   # GET /people/1 or /people/1.json
@@ -43,12 +45,10 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @person.update(person_params)
         format.html { redirect_to person_url(@person), notice: "Person was successfully updated." }
-        format.json { render json: Person.all, status: :ok }
+        format.json { render :show, status: :ok, location: @person }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        # format.json { render json: @person.errors, status: :unprocessable_entity }
-      format.json { render json: Person.all, status: :ok }
-
+        format.json { render json: @person.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,6 +56,11 @@ class PeopleController < ApplicationController
   # DELETE /people/1 or /people/1.json
   def destroy
     @person.destroy
+    # @cars = Car.where(person_id: @people.id)
+    # @cars.each do |car|
+    #   Car.destroy
+    # end
+    # @person.destroy
 
     respond_to do |format|
       format.html { redirect_to people_url, notice: "Person was successfully destroyed." }
@@ -63,7 +68,6 @@ class PeopleController < ApplicationController
       #changing default otherwise throw error to frontend when we del
       #format.json { head :no_content }
       
-      #extra request but small and keeps in sync / instant changes to frontend
       format.json { render json: Person.all, status: :ok }
 
     end

@@ -5,9 +5,11 @@ one:
   make: MyString
   model: MyString
   price: 1
+  person_id: 1
 
 two:
   year: 1
   make: MyString
   model: MyString
   price: 1
+  person_id: 1

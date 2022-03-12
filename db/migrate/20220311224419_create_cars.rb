@@ -5,6 +5,7 @@ class CreateCars < ActiveRecord::Migration[7.0]
       t.string :make
       t.string :model
       t.integer :price
+      t.integer :person_id
 
       t.timestamps
     end
