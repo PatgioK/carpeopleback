@@ -55,12 +55,12 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1 or /people/1.json
   def destroy
-    @person.destroy
-    # @cars = Car.where(person_id: @people.id)
-    # @cars.each do |car|
-    #   Car.destroy
-    # end
     # @person.destroy
+    @cars = @person.cars
+    @cars.each do |car|
+      car.destroy
+    end
+    @person.destroy
 
     respond_to do |format|
       format.html { redirect_to people_url, notice: "Person was successfully destroyed." }
