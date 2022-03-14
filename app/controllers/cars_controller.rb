@@ -1,11 +1,17 @@
 class CarsController < ApplicationController
   before_action :set_car, only: %i[ show edit update destroy ]
 
+  
+  
+  skip_before_action :verify_authenticity_token
+
   # GET /cars or /cars.json
   def index
     @cars = Car.all
   end
 
+  
+  
   # GET /cars/1 or /cars/1.json
   def show
   end
@@ -27,6 +33,7 @@ class CarsController < ApplicationController
       if @car.save
         format.html { redirect_to car_url(@car), notice: "Car was successfully created." }
         format.json { render :show, status: :created, location: @car }
+        # format.json { render :people.html.erb, status: :created, location: @car }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @car.errors, status: :unprocessable_entity }
@@ -53,7 +60,10 @@ class CarsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to cars_url, notice: "Car was successfully destroyed." }
-      format.json { head :no_content }
+      # format.json { head :no_content }
+
+
+      format.json { render json: Person.all, status: :ok }
     end
   end
 

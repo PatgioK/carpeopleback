@@ -55,12 +55,12 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1 or /people/1.json
   def destroy
-    # @person.destroy
-    @cars = @person.cars
-    @cars.each do |car|
-      car.destroy
-    end
     @person.destroy
+    # @cars = @person.cars
+    # @cars.each do |car|
+    #   car.destroy
+    # end
+    # @person.destroy
 
     respond_to do |format|
       format.html { redirect_to people_url, notice: "Person was successfully destroyed." }
@@ -69,6 +69,9 @@ class PeopleController < ApplicationController
       #format.json { head :no_content }
       
       format.json { render json: Person.all, status: :ok }
+      # format.json { render json: @people.to_json(include: :cars), status: :ok }
+
+    # render json: @people.to_json(include: :cars)
 
     end
   end
